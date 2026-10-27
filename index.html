@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0e14">
+  <meta name="description" content="HQL Web Studio - nhận làm website cá nhân, landing page, trang giới thiệu. Giá từ 150k.">
+  <title>HQL Web Studio — Làm website theo yêu cầu</title>
+
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --bg-soft: #121722;
+      --card: #151b27;
+      --text: #e6ecf5;
+      --muted: #8a97ab;
+      --accent: #6aa9ff;
+      --line: #1f2734;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    button:focus-visible, a:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    #bgParticles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    main, .footer { position: relative; z-index: 1; }
+
+    .container { width: min(1080px, 92%); margin: 0 auto; }
+    .section { padding: 80px 0; }
+
+    .section-heading {
+      max-width: 620px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .label {
+      display: inline-block;
+      padding: 5px 12px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.25);
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+
+    h1, h2, h3 { line-height: 1.25; letter-spacing: -.3px; font-weight: 700; }
+    h2 { margin-top: 14px; font-size: clamp(26px, 4vw, 36px); }
+
+    .section-heading p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .accent { color: var(--accent); }
+    .muted { color: var(--muted); }
+
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11,14,20,.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    
+    .logo span { white-space: nowrap; }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0b0e14;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: #c3ccdb;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(0,0,0,.25);
+      transition: transform .22s ease, border-color .22s ease,
+                  background .22s ease, color .22s ease, box-shadow .22s ease;
+    }
+
+    .nav-links a:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--card);
+      box-shadow: 0 8px 20px rgba(106,169,255,.22);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 40px; height: 40px;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .15s, border-color .15s;
+    }
+
+    .btn-primary { background: var(--accent); color: #0b0e14; }
+    .btn-primary:hover { background: #8bbcff; }
+    .btn-outline {
+      color: var(--text);
+      border-color: var(--line);
+      background: var(--bg-soft);
+    }
+    .btn-outline:hover { border-color: var(--accent); }
+
+    .hero { padding: 70px 0 60px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: 48px;
+    }
+    
+    .hero-grid > * { min-width: 0; }
+
+    .hero h1 {
+      margin: 18px 0 18px;
+      font-size: clamp(32px, 4.8vw, 48px);
+      min-height: 2.5em;
+    }
+
+    .type-line.typing::after {
+      content: "|";
+      margin-left: 2px;
+      color: var(--accent);
+      font-weight: 400;
+      animation: blink 0.9s step-end infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-description {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .browser {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg-soft);
+      overflow: hidden;
+    }
+
+    .browser-bar {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--card);
+    }
+
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #3a4353; }
+
+    .browser-address {
+      flex: 1;
+      margin-left: 8px;
+      padding: 3px 10px;
+      border-radius: 5px;
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .preview-body { padding: 26px 22px; }
+
+    .preview-body h3 { margin: 12px 0 8px; font-size: 22px; }
+    .preview-body p { color: var(--muted); font-size: 13px; }
+
+    .preview-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .preview-features > div {
+      padding: 12px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      min-width: 0;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .preview-features strong { display: block; color: var(--accent); font-size: 13px; }
+    .preview-features span { color: var(--muted); font-size: 11px; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .service-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .service-card h3 { margin-bottom: 10px; font-size: 17px; }
+    .service-card p { color: var(--muted); font-size: 13px; }
+
+    .service-card ul {
+      margin-top: 14px;
+      padding-left: 0;
+      list-style: none;
+      color: #c8d1df;
+      font-size: 13px;
+    }
+
+    .service-card li {
+      padding: 5px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .service-card li:first-child { border-top: none; }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .process-card {
+      padding: 20px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .process-number { color: var(--accent); font-size: 12px; font-weight: 700; }
+    .process-card h3 { margin: 10px 0 6px; font-size: 15px; }
+    .process-card p { color: var(--muted); font-size: 13px; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .price-card {
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .price-card.featured { border-color: var(--accent); }
+
+    .price-tag {
+      align-self: flex-start;
+      padding: 3px 9px;
+      border-radius: 5px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .price-card.featured .price-tag {
+      background: rgba(106,169,255,.12);
+      color: var(--accent);
+    }
+
+    .price-card h3 { margin-top: 12px; font-size: 17px; }
+
+    .price {
+      margin: 12px 0 4px;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .price small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    .price-description {
+      margin: 12px 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .price-card ul {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 0;
+      list-style: none;
+      color: #c8d1df;
+      font-size: 13px;
+    }
+
+    .price-card li::before {
+      content: "·";
+      margin-right: 8px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .price-card .btn { width: 100%; margin-top: auto; }
+
+    .pricing-note {
+      max-width: 720px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .project-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .project-art {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-soft);
+    }
+
+    .project-art .mock-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .project-art h3 { max-width: 240px; font-size: 20px; }
+
+    .mock-lines {
+      display: flex;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .mock-lines span {
+      width: 40px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--line);
+    }
+
+    .mock-lines span:first-child { background: var(--accent); }
+
+    .project-info { padding: 16px; }
+    .project-info h3 { font-size: 15px; }
+    .project-info p { margin-top: 6px; color: var(--muted); font-size: 12px; }
+
+    .demo-label {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .faq-list {
+      max-width: 720px;
+      display: grid;
+      gap: 10px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+    }
+
+    .faq-item summary {
+      position: relative;
+      padding: 16px 44px 16px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: "+";
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      color: var(--accent);
+      font-size: 18px;
+      transform: translateY(-50%);
+    }
+
+    .faq-item[open] summary::after { content: "−"; }
+
+    .faq-answer {
+      padding: 0 18px 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .contact-panel {
+      padding: 44px 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      text-align: center;
+    }
+
+    .contact-panel h2 { max-width: 620px; margin: 14px auto; }
+
+    .contact-panel p {
+      max-width: 540px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .contact-hint {
+      margin-top: 14px !important;
+      font-size: 12px !important;
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer p { color: var(--muted); font-size: 12px; }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .back-top {
+      position: fixed;
+      right: 16px; bottom: 16px;
+      z-index: 50;
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--accent);
+      opacity: 0;
+      visibility: hidden;
+      transition: .2s;
+    }
+
+    .back-top.visible { opacity: 1; visibility: visible; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .label { animation: none; }
+    }
+
+    @media (max-width: 1024px) {
+      .menu-toggle { display: grid; place-items: center; }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 0; right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 14px 4% 18px;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 16px; font-size: 14px; text-align: center; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero h1 { font-size: clamp(30px, 9vw, 42px); }
+
+      .services-grid, .pricing-grid, .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 680px) {
+      .section { padding: 56px 0; }
+      .navbar { min-height: 62px; }
+
+      .hero { padding: 46px 0 40px; }
+      
+      .services-grid, .pricing-grid, .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+      .preview-features { grid-template-columns: 1fr 1fr; }
+
+      .process-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .contact-panel { padding: 34px 18px; }
+      .footer { margin-top: 40px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 380px) {
+      .process-grid { grid-template-columns: 1fr; }
+      .hero-actions .btn { width: 100%; }
+      .preview-features { grid-template-columns: 1fr; gap: 5px; }
+      .preview-features > div { padding: 9px 6px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container navbar">
+      <a href="#home" class="logo" aria-label="HQL Web Studio">
+        <span class="logo-mark">HQL</span>
+        <span>HQL Web Studio</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button"
+        aria-label="Mở menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
+        <a href="#services">Dịch vụ</a>
+        <a href="#pricing">Bảng giá</a>
+        <a href="san-pham.html">Sản phẩm</a>
+        <a href="#faq">Câu hỏi</a>
+        <a href="about.html">Giới thiệu</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="label">Nhận làm website</span>
+
+          <h1 aria-label="Website theo yêu cầu, giá từ 150k.">
+            <span class="type-line type-1" data-text="Website theo yêu cầu,"></span><br>
+            <span class="type-line type-2 accent" data-text="giá từ 150k."></span>
+          </h1>
+
+          <p class="hero-description">
+            Mình nhận làm website cá nhân, landing page, trang giới thiệu
+            và giao diện web theo yêu cầu. Đơn giản, chạy tốt trên điện thoại,
+            giá phải chăng. Bạn gửi ý tưởng, mình báo giá trước khi làm.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary zalo-link" href="#contact" target="_blank" rel="noopener">
+              Nhắn Zalo
+            </a>
+            <a class="btn btn-outline" href="#pricing">
+              Xem bảng giá
+            </a>
+          </div>
+
+          <p class="hero-note">Trao đổi trước — báo giá trước — làm sau.</p>
+        </div>
+
+        <div class="browser" aria-hidden="true">
+          <div class="browser-bar">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="browser-address">your-website.com</span>
+          </div>
+          <div class="preview-body">
+            <span class="label">Giao diện mẫu</span>
+            <h3>Website của bạn<br>sẽ trông như thế này.</h3>
+            <p>Gọn gàng, dễ đọc, chạy tốt trên mọi thiết bị.</p>
+
+            <div class="preview-features">
+              <div><strong>1 trang</strong><span>Cơ bản</span></div>
+              <div><strong>Mobile</strong><span>Responsive</span></div>
+              <div><strong>150k</strong><span>Khởi điểm</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="label">Dịch vụ</span>
+          <h2>Mình làm được gì</h2>
+          <p>Mỗi dự án sẽ trao đổi cụ thể về nội dung, phong cách và ngân sách trước khi bắt đầu.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <h3>Website cá nhân</h3>
+            <p>Trang giới thiệu bản thân, portfolio, hoặc trang bio đơn giản.</p>
+            <ul>
+              <li>Thiết kế theo phong cách riêng</li>
+              <li>Có link mạng xã hội, liên hệ</li>
+              <li>Hiển thị tốt trên điện thoại</li>
+            </ul>
+          </article>
+
+          <article class="service-card reveal">
+            <h3>Landing page</h3>
+            <p>Trang giới thiệu sản phẩm, dịch vụ, sự kiện hoặc dự án.</p>
+            <ul>
+              <li>Bố cục rõ ràng, dễ theo dõi</li>
+              <li>Có nút liên hệ / CTA</li>
+              <li>Hiệu ứng vừa phải</li>
+            </ul>
+          </article>
+
+          <article class="service-card reveal">
+            <h3>Làm theo yêu cầu</h3>
+            <p>Giao diện tùy chỉnh dựa trên ý tưởng bạn đưa ra.</p>
+            <ul>
+              <li>HTML, CSS, JavaScript</li>
+              <li>Sửa giao diện có sẵn</li>
+              <li>Báo giá trước khi nhận</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="label">Quy trình</span>
+          <h2>Làm việc thế nào</h2>
+          <p>Rõ ràng từ đầu để tránh phát sinh về sau.</p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card reveal">
+            <span class="process-number">01</span>
+            <h3>Bạn gửi ý tưởng</h3>
+            <p>Mô tả website, hình tham khảo, tính năng muốn có.</p>
+          </article>
+
+          <article class="process-card reveal">
+            <span class="process-number">02</span>
+            <h3>Chốt báo giá</h3>
+            <p>Xác định phạm vi, thời gian, chi phí, số lần sửa.</p>
+          </article>
+
+          <article class="process-card reveal">
+            <span class="process-number">03</span>
+            <h3>Làm website</h3>
+            <p>Dựng giao diện, kiểm tra trên máy tính và điện thoại.</p>
+          </article>
+
+          <article class="process-card reveal">
+            <span class="process-number">04</span>
+            <h3>Bàn giao</h3>
+            <p>Kiểm tra lần cuối, giao file, hướng dẫn sử dụng.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="label">Bảng giá</span>
+          <h2>Giá tham khảo</h2>
+          <p>Giá cuối cùng tùy vào độ phức tạp, số trang và tính năng.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card reveal">
+            <span class="price-tag">CƠ BẢN</span>
+            <h3>Website 1 trang</h3>
+            <div class="price">
+              150.000đ
+              <small>Giá tham khảo</small>
+            </div>
+            <p class="price-description">
+              Phù hợp cho trang cá nhân hoặc giới thiệu ngắn.
+            </p>
+            <ul>
+              <li>1 trang cơ bản</li>
+              <li>Responsive điện thoại</li>
+              <li>Nội dung và liên kết cơ bản</li>
+              <li>Sửa theo phạm vi đã chốt</li>
+            </ul>
+            <a class="btn btn-outline zalo-link" href="#contact" target="_blank" rel="noopener">
+              Hỏi gói này
+            </a>
+          </article>
+
+          <article class="price-card featured reveal">
+            <span class="price-tag">PHỔ BIẾN</span>
+            <h3>Landing page</h3>
+            <div class="price">
+              300.000đ
+              <small>Giá tham khảo</small>
+            </div>
+            <p class="price-description">
+              Cho portfolio, landing page hoặc trang nhiều mục.
+            </p>
+            <ul>
+              <li>Nhiều khu vực nội dung</li>
+              <li>Menu điều hướng</li>
+              <li>Hiệu ứng cơ bản</li>
+              <li>Kiểm tra trên điện thoại</li>
+            </ul>
+            <a class="btn btn-primary zalo-link" href="#contact" target="_blank" rel="noopener">
+              Hỏi gói này
+            </a>
+          </article>
+
+          <article class="price-card reveal">
+            <span class="price-tag">TÙY CHỈNH</span>
+            <h3>Làm riêng</h3>
+            <div class="price">
+              Từ 500.000đ
+              <small>Báo giá sau khi trao đổi</small>
+            </div>
+            <p class="price-description">
+              Cho website có bố cục hoặc tính năng đặc biệt.
+            </p>
+            <ul>
+              <li>Trao đổi yêu cầu chi tiết</li>
+              <li>Tính năng riêng (nếu làm được)</li>
+              <li>Thống nhất tiến độ</li>
+              <li>Báo giá trước khi làm</li>
+            </ul>
+            <a class="btn btn-outline zalo-link" href="#contact" target="_blank" rel="noopener">
+              Trao đổi thêm
+            </a>
+          </article>
+        </div>
+
+        <p class="pricing-note">
+          Giá trên chỉ mang tính tham khảo. Chưa gồm tên miền trả phí,
+          hosting trả phí, backend hoặc dịch vụ bên thứ ba (nếu có).
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="portfolio">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="label">Mẫu tham khảo</span>
+          <h2>Vài giao diện demo</h2>
+          <p>Đây là concept minh họa phong cách, không phải dự án khách hàng đã hoàn thành.</p>
+        </div>
+
+        <div class="portfolio-grid">
+          <article class="project-card reveal">
+            <div class="project-art">
+              <span class="mock-label">CÁ NHÂN / 01</span>
+              <h3>Trang cá nhân</h3>
+              <div class="mock-lines"><span></span><span></span><span></span></div>
+            </div>
+            <div class="project-info">
+              <h3>Personal Portfolio</h3>
+              <p>Trang cá nhân tối giản, giới thiệu kỹ năng và dự án.</p>
+              <span class="demo-label">Demo concept</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-art">
+              <span class="mock-label">SẢN PHẨM / 02</span>
+              <h3>Landing page</h3>
+              <div class="mock-lines"><span></span><span></span><span></span></div>
+            </div>
+            <div class="project-info">
+              <h3>Product Landing</h3>
+              <p>Trang giới thiệu sản phẩm có nút liên hệ rõ ràng.</p>
+              <span class="demo-label">Demo concept</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-art">
+              <span class="mock-label">DỊCH VỤ / 03</span>
+              <h3>Trang dịch vụ</h3>
+              <div class="mock-lines"><span></span><span></span><span></span></div>
+            </div>
+            <div class="project-info">
+              <h3>Service Page</h3>
+              <p>Trang giới thiệu dịch vụ, có phần liên hệ cuối trang.</p>
+              <span class="demo-label">Demo concept</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="label">Câu hỏi</span>
+          <h2>Một số thắc mắc thường gặp</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item reveal">
+            <summary>Website có xem được trên điện thoại không?</summary>
+            <div class="faq-answer">
+              Có. Giao diện được làm responsive — tự co giãn theo màn hình
+              điện thoại, máy tính bảng và máy tính. Kết quả sẽ được kiểm tra
+              trên vài thiết bị thực tế trước khi bàn giao.
+            </div>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>Có làm theo phong cách riêng không?</summary>
+            <div class="faq-answer">
+              Được. Bạn gửi ý tưởng, màu sắc, hình tham khảo, hoặc website mẫu
+              bạn thích. Mình sẽ xem có làm được không rồi mới chốt phạm vi.
+            </div>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>Có làm đăng nhập, lưu dữ liệu, quản trị viên không?</summary>
+            <div class="faq-answer">
+              Website HTML tĩnh không có sẵn backend hay cơ sở dữ liệu.
+              Những tính năng như tài khoản, lưu dữ liệu, thanh toán thật
+              cần giải pháp riêng — mình sẽ báo rõ nếu làm được và giá bao nhiêu.
+            </div>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>Đưa website lên mạng có tốn phí không?</summary>
+            <div class="faq-answer">
+              Có thể dùng GitHub Pages miễn phí cho web tĩnh. Tên miền riêng,
+              backend hoặc dịch vụ khác có thể mất phí. Bạn nên kiểm tra
+              điều khoản của dịch vụ trước khi dùng.
+            </div>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>Bao lâu thì xong?</summary>
+            <div class="faq-answer">
+              Tùy số trang, tính năng và số lần sửa. Thường 2–7 ngày với gói cơ bản,
+              lâu hơn với dự án phức tạp. Thời gian cụ thể sẽ chốt trước khi bắt đầu.
+            </div>
+          </details>
+
+          <details class="faq-item reveal">
+            <summary>Có phải trả tiền trước không?</summary>
+            <div class="faq-answer">
+              Không bắt buộc. Bạn trao đổi trước, mình báo giá, hai bên thống nhất
+              cách thanh toán rồi mới bắt đầu. Không có chuyện "cọc trước rồi tính sau".
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-panel reveal">
+          <span class="label">Liên hệ</span>
+          <h2>Có ý tưởng rồi? <span class="accent">Nhắn mình.</span></h2>
+          <p>
+            Gửi mô tả ngắn về website bạn cần, phong cách mong muốn,
+            tính năng và ngân sách dự kiến. Mình sẽ trả lời và báo giá lại.
+          </p>
+
+          <div class="contact-actions">
+            <a class="btn btn-primary zalo-link" href="#contact" target="_blank" rel="noopener">
+              Nhắn Zalo
+            </a>
+            <button class="btn btn-outline" id="copyEmailMessage" type="button">
+              Sao chép mẫu tin nhắn
+            </button>
+          </div>
+
+          <p class="contact-hint" id="copyStatus" aria-live="polite">
+            Nút Zalo sẽ hoạt động sau khi bạn điền số điện thoại vào code.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a href="#home" class="logo">
+          <span class="logo-mark">HQL</span>
+          <span>HQL Web Studio</span>
+        </a>
+        <p style="margin-top: 10px;">Nhận làm website theo yêu cầu.</p>
+        <p style="margin-top: 4px;">© <span id="year"></span> HQL Web Studio.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#services">Dịch vụ</a>
+        <a href="#pricing">Bảng giá</a>
+        <a href="san-pham.html">Sản phẩm</a>
+        <a href="about.html">Giới thiệu</a>
+        <a href="#contact">Liên hệ</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" type="button" aria-label="Lên đầu trang">↑</button>
+
+  <script>
+    const CONFIG = { zaloPhone: "0325687418" };
+
+    function setupZaloLinks() {
+      const phone = String(CONFIG.zaloPhone).replace(/\D/g, "");
+      const links = document.querySelectorAll(".zalo-link");
+      const valid = /^\d{9,15}$/.test(phone);
+
+      links.forEach((link) => {
+        if (valid) {
+          link.href = "https://zalo.me/" + phone;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        } else {
+          link.href = "#contact";
+          link.removeAttribute("target");
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            document.getElementById("copyStatus").textContent =
+              "Chưa cài số Zalo. Sửa CONFIG.zaloPhone trong file.";
+          });
+        }
+      });
+    }
+
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.textContent = open ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const backTop = document.getElementById("backTop");
+    window.addEventListener("scroll", () => {
+      backTop.classList.toggle("visible", window.scrollY > 450);
+    }, { passive: true });
+    backTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const revealEls = document.querySelectorAll(".reveal");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if ("IntersectionObserver" in window && !reduceMotion) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealEls.forEach((el) => observer.observe(el));
+    } else {
+      revealEls.forEach((el) => el.classList.add("show"));
+    }
+
+    const l1 = document.querySelector(".type-1");
+    const l2 = document.querySelector(".type-2");
+    const t1 = l1.dataset.text;
+    const t2 = l2.dataset.text;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    async function typeLoop() {
+      while (true) {
+        l1.textContent = "";
+        l2.textContent = "";
+        l1.classList.remove("typing");
+        l2.classList.remove("typing");
+        await wait(400);
+
+        l1.classList.add("typing");
+        for (let i = 1; i <= t1.length; i++) {
+          l1.textContent = t1.slice(0, i);
+          await wait(65);
+        }
+        l1.classList.remove("typing");
+        l2.classList.add("typing");
+        await wait(200);
+
+        for (let i = 1; i <= t2.length; i++) {
+          l2.textContent = t2.slice(0, i);
+          await wait(65);
+        }
+        await wait(2200);
+
+        for (let i = t2.length; i >= 0; i--) {
+          l2.textContent = t2.slice(0, i);
+          await wait(30);
+        }
+        l2.classList.remove("typing");
+        l1.classList.add("typing");
+        await wait(150);
+
+        for (let i = t1.length; i >= 0; i--) {
+          l1.textContent = t1.slice(0, i);
+          await wait(30);
+        }
+        l1.classList.remove("typing");
+        await wait(700);
+      }
+    }
+
+    if (reduceMotion) {
+      l1.textContent = t1;
+      l2.textContent = t2;
+    } else {
+      typeLoop();
+    }
+
+    function initParticles() {
+      if (reduceMotion) return;
+
+      const canvas = document.createElement("canvas");
+      canvas.id = "bgParticles";
+      document.body.insertBefore(canvas, document.body.firstChild);
+
+      const ctx = canvas.getContext("2d");
+      let w, h;
+      const particles = [];
+      const COUNT = 55;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      for (let i = 0; i < COUNT; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.4,
+          vy: Math.random() * 0.25 + 0.05,
+          vx: (Math.random() - 0.5) * 0.12,
+          alpha: Math.random() * 0.35 + 0.1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of particles) {
+          p.y -= p.vy;
+          p.x += p.vx;
+          if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+          if (p.x < -10) p.x = w + 10;
+          if (p.x > w + 10) p.x = -10;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(106,169,255," + p.alpha + ")";
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    initParticles();
+
+    const sampleMessage =
+`Chào HQL Web Studio,
+
+Mình muốn hỏi về làm website.
+
+- Loại website:
+- Mục đích:
+- Phong cách muốn:
+- Tính năng cần:
+- Ngân sách dự kiến:
+- Thời gian mong muốn:
+
+Mình muốn trao đổi thêm về phạm vi và báo giá.`;
+
+    document.getElementById("copyEmailMessage").addEventListener("click", async () => {
+      const status = document.getElementById("copyStatus");
+      try {
+        await navigator.clipboard.writeText(sampleMessage);
+        status.textContent = "Đã sao chép. Bạn có thể dán vào Zalo.";
+      } catch (err) {
+        const ta = document.createElement("textarea");
+        ta.value = sampleMessage;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch (_) {}
+        ta.remove();
+        status.textContent = ok
+          ? "Đã sao chép. Bạn có thể dán vào Zalo."
+          : "Không sao chép tự động được. Bạn chọn và copy mẫu trong code.";
+      }
+    });
+
+    setupZaloLinks();
+  </script>
+</body>
+</html>

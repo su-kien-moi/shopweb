@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0e14">
+  <meta name="description" content="Trang cá nhân — HQL">
+  <title>Về mình — HQL</title>
+
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --bg-soft: #121722;
+      --card: #151b27;
+      --text: #e6ecf5;
+      --muted: #8a97ab;
+      --accent: #6aa9ff;
+      --danger: #ff5c7a;
+      --line: #1f2734;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    input, textarea { font: inherit; }
+
+    button:focus-visible, a:focus-visible,
+    textarea:focus-visible, input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    #bgParticles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    main, .footer { position: relative; z-index: 1; }
+
+    .container { width: min(1080px, 92%); margin: 0 auto; }
+    .section { padding: 70px 0; }
+
+    .label {
+      display: inline-block;
+      padding: 5px 12px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+
+    h1, h2, h3 { line-height: 1.25; letter-spacing: -.3px; font-weight: 700; }
+    h2 { margin-top: 14px; font-size: clamp(24px, 3.8vw, 34px); }
+    .accent { color: var(--accent); }
+
+    .section-heading {
+      max-width: 620px;
+      margin: 0 auto 36px;
+      text-align: center;
+    }
+
+    .section-heading p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11,14,20,.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    
+    .logo span { white-space: nowrap; }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0b0e14;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      display: inline-block;
+      padding: 8px 15px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: #c3ccdb;
+      font-size: 13px;
+      font-weight: 500;
+      transition: transform .2s, border-color .2s, color .2s, box-shadow .2s;
+    }
+
+    .nav-links a:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 6px 16px rgba(106,169,255,.2);
+    }
+
+    .lang-toggle {
+      padding: 8px 14px;
+      border: 1px solid rgba(106,169,255,.4);
+      border-radius: 100px;
+      background: rgba(106,169,255,.08);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      transition: background .2s;
+    }
+
+    .lang-toggle:hover { background: rgba(106,169,255,.18); }
+
+    .menu-toggle {
+      display: none;
+      width: 40px; height: 40px;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .hero { padding: 70px 0 50px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin: 16px 0 14px;
+      font-size: clamp(32px, 5vw, 48px);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 520px;
+    }
+
+    .birthday-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 22px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      font-size: 13px;
+      color: #c8d1df;
+    }
+
+    .birthday-badge strong { color: var(--accent); }
+
+    .avatar-card {
+      aspect-ratio: 1 / 1;
+      max-width: 280px;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(106,169,255,.2), transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(167,139,250,.15), transparent 50%);
+    }
+
+    .avatar-inner {
+      position: relative;
+      text-align: center;
+    }
+
+    .avatar-emoji { font-size: 84px; display: block; }
+    .avatar-inner p { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+    .about-box {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .about-box p { color: #c8d1df; font-size: 15px; margin-bottom: 14px; }
+    .about-box p:last-child { margin-bottom: 0; }
+
+    .interest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .interest-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      transition: transform .2s, border-color .2s;
+    }
+
+    .interest-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(106,169,255,.4);
+    }
+
+    .interest-icon { font-size: 28px; display: block; margin-bottom: 12px; }
+    .interest-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .interest-card p { color: var(--muted); font-size: 13px; }
+
+    .diary-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .diary-tab {
+      padding: 9px 22px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all .2s;
+    }
+
+    .diary-tab:hover { color: var(--accent); border-color: var(--accent); }
+    .diary-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0b0e14;
+    }
+
+    .composer {
+      max-width: 720px;
+      margin: 0 auto 28px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .composer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .composer-title { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+    .date-input {
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .composer-textarea {
+      width: 100%;
+      min-height: 70px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--text);
+      font-size: 14px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .composer-textarea::placeholder { color: #5c6879; }
+
+    .composer-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .composer-preview[hidden] { display: none; }
+
+    .preview-item {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      overflow: hidden;
+      aspect-ratio: 1;
+    }
+
+    .preview-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .preview-item.info-preview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      text-align: center;
+      gap: 4px;
+    }
+
+    .preview-icon { font-size: 26px; }
+    .preview-name {
+      font-size: 10px;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+    .preview-size { font-size: 9px; color: #5c6879; }
+
+    .remove-attach {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 22px; height: 22px;
+      display: grid; place-items: center;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0,0,0,.75);
+      color: #fff;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .composer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .attach-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .attach-btn {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 12px;
+      transition: all .15s;
+    }
+
+    .attach-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .post-btn {
+      padding: 9px 22px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0b0e14;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background .15s, opacity .15s;
+    }
+
+    .post-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .post-btn:not(:disabled):hover { background: #8bbcff; }
+
+    .composer-note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .diary-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .post-card {
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      background: var(--card);
+      animation: fadeIn .35s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .post-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(106,169,255,.1);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .3px;
+    }
+
+    .post-time::before { content: "🕐"; font-size: 10px; }
+
+    .post-delete {
+      width: 26px; height: 26px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1;
+      transition: all .15s;
+    }
+
+    .post-delete:hover { border-color: var(--danger); color: var(--danger); }
+
+    .post-text {
+      color: #d5dce8;
+      font-size: 14px;
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .post-text:empty { display: none; }
+
+    .post-media {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px;
+    }
+
+    .post-media-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-soft);
+    }
+
+    .post-media-item img,
+    .post-media-item video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 320px;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .post-media-item.file-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+
+    .post-media-item.file-item:hover { border-color: var(--accent); }
+
+    .file-icon { font-size: 22px; flex-shrink: 0; }
+
+    .file-info { min-width: 0; flex: 1; }
+
+    .file-name {
+      font-size: 13px;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-size { font-size: 11px; color: var(--muted); }
+
+    .diary-empty {
+      padding: 36px 20px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .diary-empty p:first-child { color: #c8d1df; margin-bottom: 6px; }
+    .diary-empty p:last-child { font-size: 12px; }
+
+    .contact-box {
+      padding: 40px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      text-align: center;
+    }
+
+    .contact-box h2 { max-width: 620px; margin: 12px auto; }
+    .contact-box p {
+      max-width: 520px;
+      margin: 0 auto 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .15s, border-color .15s;
+    }
+
+    .btn-primary { background: var(--accent); color: #0b0e14; }
+    .btn-primary:hover { background: #8bbcff; }
+    .btn-outline {
+      color: var(--text);
+      border-color: var(--line);
+      background: var(--bg-soft);
+    }
+    .btn-outline:hover { border-color: var(--accent); }
+
+    .footer {
+      margin-top: 60px;
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer p { color: var(--muted); font-size: 12px; }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .menu-toggle { display: grid; place-items: center; }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 0; right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 14px 4% 18px;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { text-align: center; font-size: 14px; }
+      .lang-toggle { margin-top: 4px; text-align: center; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .interest-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 680px) {
+      .section { padding: 50px 0; }
+      .navbar { min-height: 62px; }
+
+      .hero { padding: 50px 0 30px; }
+      .interest-grid { grid-template-columns: 1fr; }
+      .composer { padding: 14px; }
+      .post-card { padding: 14px 16px; }
+      .post-media { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">HQL</span>
+        <span>HQL</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button"
+        aria-label="Mở menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Điều hướng">
+        <a href="#about" data-vi="Về mình" data-en="About">Về mình</a>
+        <a href="#interests" data-vi="Sở thích" data-en="Interests">Sở thích</a>
+        <a href="#diary" data-vi="Nhật ký" data-en="Diary">Nhật ký</a>
+        <a href="#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+        <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">EN</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="label" data-vi="Trang cá nhân" data-en="Personal page">Trang cá nhân</span>
+          <h1>
+            <span data-vi="Xin chào, mình là" data-en="Hi, I'm">Xin chào, mình là</span><br>
+            <span class="accent">HQL.</span>
+          </h1>
+          <p data-vi="Mình thích làm web, viết lách và ghi lại những điều diễn ra xung quanh. Đây là nơi mình lưu lại vài thứ về bản thân."
+             data-en="I enjoy building websites, writing, and noting down things happening around me. This is where I keep a bit about myself.">
+            Mình thích làm web, viết lách và ghi lại những điều diễn ra xung quanh.
+            Đây là nơi mình lưu lại vài thứ về bản thân.
+          </p>
+          <div class="birthday-badge">
+            🎂 <span data-vi="Sinh nhật:" data-en="Birthday:">Sinh nhật:</span>
+            <strong data-vi="23 tháng 11" data-en="November 23">23 tháng 11</strong>
+          </div>
+        </div>
+
+        <div class="avatar-card" aria-hidden="true">
+          <div class="avatar-inner">
+            <span class="avatar-emoji">👤</span>
+            <p data-vi="Ảnh đại diện" data-en="Profile picture">Ảnh đại diện</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-heading">
+          <span class="label" data-vi="Về mình" data-en="About">Về mình</span>
+          <h2 data-vi="Vài dòng về bản thân" data-en="A few words about me">Vài dòng về bản thân</h2>
+        </div>
+        <div class="about-box">
+          <p data-vi="Mình là HQL, sinh ngày 23 tháng 11. Hiện đang làm web và nhận các dự án thiết kế giao diện nhỏ. Thích phong cách tối giản, rõ ràng, không rườm rà."
+             data-en="I'm HQL, born on November 23. I currently build websites and take on small UI design projects. I prefer a minimal, clear style — nothing cluttered.">
+            Mình là HQL, sinh ngày 23 tháng 11. Hiện đang làm web và nhận các dự án thiết kế
+            giao diện nhỏ. Thích phong cách tối giản, rõ ràng, không rườm rà.
+          </p>
+          <p data-vi="Ngoài giờ làm, mình hay đọc sách, nghe nhạc và ghi chú lại những chuyện nhỏ trong ngày. Trang này là nơi lưu những thứ đó — cùng với nhật ký những năm tới."
+             data-en="Outside work, I read, listen to music, and jot down small things from the day. This page keeps those — along with a diary for the coming years.">
+            Ngoài giờ làm, mình hay đọc sách, nghe nhạc và ghi chú lại những chuyện nhỏ trong ngày.
+            Trang này là nơi lưu những thứ đó — cùng với nhật ký những năm tới.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="interests">
+      <div class="container">
+        <div class="section-heading">
+          <span class="label" data-vi="Sở thích" data-en="Interests">Sở thích</span>
+          <h2 data-vi="Mình thích gì" data-en="What I like">Mình thích gì</h2>
+        </div>
+
+        <div class="interest-grid">
+          <article class="interest-card">
+            <span class="interest-icon">💻</span>
+            <h3 data-vi="Làm web" data-en="Web building">Làm web</h3>
+            <p data-vi="HTML, CSS, JS — dựng giao diện từ đầu và tinh chỉnh cho gọn."
+               data-en="HTML, CSS, JS — building interfaces from scratch and refining them.">
+              HTML, CSS, JS — dựng giao diện từ đầu và tinh chỉnh cho gọn.
+            </p>
+          </article>
+
+          <article class="interest-card">
+            <span class="interest-icon">📖</span>
+            <h3 data-vi="Đọc sách" data-en="Reading">Đọc sách</h3>
+            <p data-vi="Thích sách kỹ năng, tản văn và vài cuốn tiểu thuyết ngắn."
+               data-en="Enjoy self-development, essays, and a few short novels.">
+              Thích sách kỹ năng, tản văn và vài cuốn tiểu thuyết ngắn.
+            </p>
+          </article>
+
+          <article class="interest-card">
+            <span class="interest-icon">🎧</span>
+            <h3 data-vi="Âm nhạc" data-en="Music">Âm nhạc</h3>
+            <p data-vi="Lo-fi, indie và nhạc không lời — nghe khi làm việc."
+               data-en="Lo-fi, indie, and instrumental — background for work.">
+              Lo-fi, indie và nhạc không lời — nghe khi làm việc.
+            </p>
+          </article>
+
+          <article class="interest-card">
+            <span class="interest-icon">✍️</span>
+            <h3 data-vi="Viết lách" data-en="Writing">Viết lách</h3>
+            <p data-vi="Ghi lại những chuyện nhỏ, cảm xúc và kế hoạch."
+               data-en="Note small things, feelings, and plans.">
+              Ghi lại những chuyện nhỏ, cảm xúc và kế hoạch.
+            </p>
+          </article>
+
+          <article class="interest-card">
+            <span class="interest-icon">🌱</span>
+            <h3 data-vi="Học điều mới" data-en="Learning new things">Học điều mới</h3>
+            <p data-vi="Mỗi tuần cố học thêm một thứ nhỏ — công cụ, khái niệm hoặc kỹ năng."
+               data-en="Try to learn one small thing each week — a tool, concept, or skill.">
+              Mỗi tuần cố học thêm một thứ nhỏ — công cụ, khái niệm hoặc kỹ năng.
+            </p>
+          </article>
+
+          <article class="interest-card">
+            <span class="interest-icon">🚶</span>
+            <h3 data-vi="Đi dạo" data-en="Walking">Đi dạo</h3>
+            <p data-vi="Hay đi bộ buổi tối, vừa đi vừa nghĩ vẩn vơ."
+               data-en="Evening walks — good time to think.">
+              Hay đi bộ buổi tối, vừa đi vừa nghĩ vẩn vơ.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="diary">
+      <div class="container">
+        <div class="section-heading">
+          <span class="label" data-vi="Nhật ký" data-en="Diary">Nhật ký</span>
+          <h2 data-vi="Ghi chép" data-en="Notes">Ghi chép</h2>
+          <p data-vi="Đăng ảnh, video, văn bản hoặc file. Dữ liệu lưu trong trình duyệt của bạn."
+             data-en="Post photos, videos, text, or files. Data is stored in your browser.">
+            Đăng ảnh, video, văn bản hoặc file. Dữ liệu lưu trong trình duyệt của bạn.
+          </p>
+        </div>
+
+        <div class="diary-tabs" id="diaryTabs" role="tablist" aria-label="Chọn năm"></div>
+
+        <div class="composer">
+          <div class="composer-head">
+            <span class="composer-title" data-vi="Bài mới" data-en="New post">Bài mới</span>
+            <input type="datetime-local" id="postDate" class="date-input">
+          </div>
+
+          <textarea id="postText" class="composer-textarea"
+            data-placeholder-vi="Hôm nay có gì..."
+            data-placeholder-en="What's up today..."
+            placeholder="Hôm nay có gì..."></textarea>
+
+          <div class="composer-preview" id="composerPreview" hidden></div>
+
+          <div class="composer-actions">
+            <div class="attach-buttons">
+              <button class="attach-btn" data-type="image" type="button">
+                📷 <span data-vi="Ảnh" data-en="Photo">Ảnh</span>
+              </button>
+              <button class="attach-btn" data-type="video" type="button">
+                🎬 <span data-vi="Video" data-en="Video">Video</span>
+              </button>
+              <button class="attach-btn" data-type="file" type="button">
+                📎 <span data-vi="File" data-en="File">File</span>
+              </button>
+            </div>
+            <button class="post-btn" id="postBtn" type="button" disabled
+              data-vi="Đăng" data-en="Post">Đăng</button>
+          </div>
+
+          <input type="file" id="fileInput" hidden>
+
+          <p class="composer-note"
+            data-vi="Lưu ý: dữ liệu chỉ lưu trong trình duyệt này. Xoá dữ liệu trình duyệt sẽ mất bài."
+            data-en="Note: data is stored in this browser only. Clearing browser data removes posts.">
+            Lưu ý: dữ liệu chỉ lưu trong trình duyệt này. Xoá dữ liệu trình duyệt sẽ mất bài.
+          </p>
+        </div>
+
+        <div class="diary-list" id="diaryList"></div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <span class="label" data-vi="Liên hệ" data-en="Contact">Liên hệ</span>
+          <h2 data-vi="Muốn nói gì thì nhắn mình." data-en="Drop me a message if you like.">
+            Muốn nói gì thì nhắn mình.
+          </h2>
+          <p data-vi="Cứ nhắn Zalo — mình thường trả lời trong ngày."
+             data-en="Feel free to message me on Zalo — I usually reply the same day.">
+            Cứ nhắn Zalo — mình thường trả lời trong ngày.
+          </p>
+          <div class="contact-actions">
+            <a class="btn btn-primary zalo-link" href="#contact" target="_blank" rel="noopener">
+              <span data-vi="Nhắn Zalo" data-en="Message on Zalo">Nhắn Zalo</span>
+            </a>
+            <a class="btn btn-outline" href="index.html">
+              <span data-vi="Về web chính" data-en="Back to main site">Về web chính</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a href="index.html" class="logo">
+          <span class="logo-mark">HQL</span>
+          <span>HQL</span>
+        </a>
+        <p style="margin-top: 10px;"
+          data-vi="Trang giới thiệu cá nhân."
+          data-en="Personal introduction page.">
+          Trang giới thiệu cá nhân.
+        </p>
+        <p style="margin-top: 4px;">© <span id="year"></span> HQL.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html" data-vi="Web chính" data-en="Main site">Web chính</a>
+        <a href="san-pham.html" data-vi="Sản phẩm" data-en="Products">Sản phẩm</a>
+        <a href="#about" data-vi="Về mình" data-en="About">Về mình</a>
+        <a href="#diary" data-vi="Nhật ký" data-en="Diary">Nhật ký</a>
+        <a href="#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const CONFIG = {
+      zaloPhone: "0325687418",
+      maxFileBytes: 50 * 1024 * 1024,
+      warnFileBytes: 10 * 1024 * 1024
+    };
+
+    const state = {
+      lang: localStorage.getItem("hql_lang") || "vi",
+      year: localStorage.getItem("hql_year") || String(new Date().getFullYear()),
+      pendingAttachments: [],
+      attachType: "image"
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+    const dom = {
+      menuToggle: $("#menuToggle"),
+      navLinks: $("#navLinks"),
+      langToggle: $("#langToggle"),
+      yearLabel: $("#year"),
+      diaryTabs: $("#diaryTabs"),
+      diaryList: $("#diaryList"),
+      postDate: $("#postDate"),
+      postText: $("#postText"),
+      postBtn: $("#postBtn"),
+      fileInput: $("#fileInput"),
+      composerPreview: $("#composerPreview")
+    };
+
+    const pad = (n) => String(n).padStart(2, "0");
+
+    function nowLocalISO() {
+      const d = new Date();
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function defaultDateForYear(year) {
+      const d = new Date();
+      return `${year}-01-01T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function formatTime(dtStr) {
+      if (!dtStr) return "";
+      const [dPart, tPart] = dtStr.split("T");
+      if (!dPart) return dtStr;
+      const [y, m, d] = dPart.split("-");
+      return `${d}/${m}/${y} · ${tPart || "00:00"}`;
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+      return (bytes / 1024 / 1024).toFixed(1) + " MB";
+    }
+
+    function fileType(file) {
+      if (file.type.startsWith("image/")) return "image";
+      if (file.type.startsWith("video/")) return "video";
+      return "file";
+    }
+
+    function fileIcon(type) {
+      if (type === "image") return "🖼️";
+      if (type === "video") return "🎬";
+      return "📄";
+    }
+
+    function readAsDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(r.result);
+        r.onerror = () => reject(r.error);
+        r.readAsDataURL(file);
+      });
+    }
+
+    const DB = {
+      name: "hql_diary",
+      version: 1,
+      store: "posts",
+      _db: null,
+
+      open() {
+        if (this._db) return Promise.resolve(this._db);
+        return new Promise((resolve, reject) => {
+          if (!window.indexedDB) {
+            reject(new Error("IndexedDB not supported"));
+            return;
+          }
+          const req = indexedDB.open(this.name, this.version);
+          req.onupgradeneeded = () => {
+            const db = req.result;
+            if (!db.objectStoreNames.contains(this.store)) {
+              db.createObjectStore(this.store, { keyPath: "id", autoIncrement: true });
+            }
+          };
+          req.onsuccess = () => {
+            this._db = req.result;
+            resolve(this._db);
+          };
+          req.onerror = () => reject(req.error);
+        });
+      },
+
+      async tx(mode) {
+        const db = await this.open();
+        return db.transaction(this.store, mode).objectStore(this.store);
+      },
+
+      async all() {
+        const store = await this.tx("readonly");
+        return new Promise((resolve, reject) => {
+          const req = store.getAll();
+          req.onsuccess = () => resolve(req.result || []);
+          req.onerror = () => reject(req.error);
+        });
+      },
+
+      async add(post) {
+        const store = await this.tx("readwrite");
+        return new Promise((resolve, reject) => {
+          const req = store.add(post);
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+      },
+
+      async remove(id) {
+        const store = await this.tx("readwrite");
+        return new Promise((resolve, reject) => {
+          const req = store.delete(id);
+          req.onsuccess = () => resolve();
+          req.onerror = () => reject(req.error);
+        });
+      }
+    };
+
+    function applyLang(lang) {
+      state.lang = lang;
+      localStorage.setItem("hql_lang", lang);
+      document.documentElement.lang = lang;
+
+      $$("[data-vi]").forEach((el) => {
+        const text = el.getAttribute("data-" + lang);
+        if (text !== null) el.textContent = text;
+      });
+
+      dom.postText.placeholder = dom.postText.getAttribute("data-placeholder-" + lang)
+        || dom.postText.placeholder;
+
+      dom.langToggle.textContent = lang === "vi" ? "EN" : "VI";
+      dom.langToggle.setAttribute("aria-label",
+        lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt");
+
+      renderPosts();
+    }
+
+    async function renderTabs() {
+      const posts = await DB.all();
+      const years = new Set(["2026", "2027"]);
+      posts.forEach((p) => years.add(p.year));
+
+      const sorted = Array.from(years).sort();
+      if (!sorted.includes(state.year)) state.year = sorted[0];
+
+      dom.diaryTabs.innerHTML = "";
+      sorted.forEach((y) => {
+        const btn = document.createElement("button");
+        btn.className = "diary-tab" + (y === state.year ? " active" : "");
+        btn.dataset.year = y;
+        btn.type = "button";
+        btn.textContent = y;
+        btn.setAttribute("role", "tab");
+        btn.addEventListener("click", () => selectYear(y));
+        dom.diaryTabs.appendChild(btn);
+      });
+    }
+
+    function selectYear(year) {
+      state.year = year;
+      localStorage.setItem("hql_year", year);
+      $$(".diary-tab").forEach((t) => t.classList.toggle("active", t.dataset.year === year));
+
+      if (!dom.postDate.value || !dom.postDate.value.startsWith(year + "-")) {
+        dom.postDate.value = defaultDateForYear(year);
+      }
+      renderPosts();
+    }
+
+    async function renderPosts() {
+      const posts = await DB.all();
+      const filtered = posts
+        .filter((p) => p.year === state.year)
+        .sort((a, b) => (b.datetime || "").localeCompare(a.datetime || ""));
+
+      dom.diaryList.innerHTML = "";
+
+      if (filtered.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "diary-empty";
+        const m1 = state.lang === "vi"
+          ? `Chưa có bài nào trong năm ${state.year}.`
+          : `No posts for ${state.year} yet.`;
+        const m2 = state.lang === "vi"
+          ? "Dùng ô soạn phía trên để đăng bài đầu tiên."
+          : "Use the composer above to post something.";
+        empty.innerHTML = `<p>${m1}</p><p>${m2}</p>`;
+        dom.diaryList.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach((p) => dom.diaryList.appendChild(buildPostCard(p)));
+    }
+
+    function buildPostCard(post) {
+      const card = document.createElement("article");
+      card.className = "post-card";
+
+      const header = document.createElement("div");
+      header.className = "post-header";
+
+      const time = document.createElement("span");
+      time.className = "post-time";
+      time.textContent = formatTime(post.datetime);
+
+      const delBtn = document.createElement("button");
+      delBtn.className = "post-delete";
+      delBtn.type = "button";
+      delBtn.textContent = "×";
+      delBtn.setAttribute("aria-label", state.lang === "vi" ? "Xoá bài" : "Delete post");
+      delBtn.addEventListener("click", () => deletePost(post));
+
+      header.appendChild(time);
+      header.appendChild(delBtn);
+      card.appendChild(header);
+
+      if (post.text) {
+        const textEl = document.createElement("div");
+        textEl.className = "post-text";
+        textEl.textContent = post.text;
+        card.appendChild(textEl);
+      }
+
+      if (post.attachments && post.attachments.length > 0) {
+        const media = document.createElement("div");
+        media.className = "post-media";
+        post.attachments.forEach((a) => media.appendChild(buildAttachment(a)));
+        card.appendChild(media);
+      }
+
+      return card;
+    }
+
+    function buildAttachment(a) {
+      const wrap = document.createElement("div");
+      wrap.className = "post-media-item";
+
+      if (a.type === "image") {
+        const img = document.createElement("img");
+        img.src = a.data;
+        img.alt = a.name;
+        img.loading = "lazy";
+        wrap.appendChild(img);
+      } else if (a.type === "video") {
+        const v = document.createElement("video");
+        v.src = a.data;
+        v.controls = true;
+        v.preload = "metadata";
+        wrap.appendChild(v);
+      } else {
+        wrap.classList.add("file-item");
+        const icon = document.createElement("span");
+        icon.className = "file-icon";
+        icon.textContent = "📄";
+
+        const info = document.createElement("div");
+        info.className = "file-info";
+
+        const name = document.createElement("div");
+        name.className = "file-name";
+        name.textContent = a.name;
+
+        const size = document.createElement("div");
+        size.className = "file-size";
+        size.textContent = formatSize(a.size || 0);
+
+        info.appendChild(name);
+        info.appendChild(size);
+        wrap.appendChild(icon);
+        wrap.appendChild(info);
+
+        wrap.addEventListener("click", () => {
+          const link = document.createElement("a");
+          link.href = a.data;
+          link.download = a.name;
+          link.click();
+        });
+      }
+
+      return wrap;
+    }
+
+    async function deletePost(post) {
+      const msg = state.lang === "vi"
+        ? "Xoá bài này? Không khôi phục được."
+        : "Delete this post? Cannot be undone.";
+      if (!confirm(msg)) return;
+
+      await DB.remove(post.id);
+      await renderTabs();
+      await renderPosts();
+    }
+
+    function updatePostBtn() {
+      const hasText = dom.postText.value.trim().length > 0;
+      const hasFiles = state.pendingAttachments.length > 0;
+      dom.postBtn.disabled = !(hasText || hasFiles);
+    }
+
+    function renderPreview() {
+      if (state.pendingAttachments.length === 0) {
+        dom.composerPreview.hidden = true;
+        dom.composerPreview.innerHTML = "";
+        return;
+      }
+
+      dom.composerPreview.hidden = false;
+      dom.composerPreview.innerHTML = "";
+
+      state.pendingAttachments.forEach((a, idx) => {
+        const item = document.createElement("div");
+        item.className = "preview-item";
+
+        if (a.type === "image") {
+          const img = document.createElement("img");
+          img.src = a.data;
+          img.alt = a.name;
+          item.appendChild(img);
+        } else {
+          item.classList.add("info-preview");
+          item.innerHTML = `
+            <span class="preview-icon">${fileIcon(a.type)}</span>
+            <span class="preview-name" title="${a.name}">${a.name}</span>
+            <span class="preview-size">${formatSize(a.size)}</span>
+          `;
+        }
+
+        const remove = document.createElement("button");
+        remove.className = "remove-attach";
+        remove.type = "button";
+        remove.textContent = "×";
+        remove.setAttribute("aria-label", "Bỏ đính kèm");
+        remove.addEventListener("click", () => {
+          state.pendingAttachments.splice(idx, 1);
+          renderPreview();
+          updatePostBtn();
+        });
+
+        item.appendChild(remove);
+        dom.composerPreview.appendChild(item);
+      });
+    }
+
+    dom.postText.addEventListener("input", updatePostBtn);
+
+    $$(".attach-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.attachType = btn.dataset.type;
+        dom.fileInput.value = "";
+        if (state.attachType === "image") dom.fileInput.accept = "image/*";
+        else if (state.attachType === "video") dom.fileInput.accept = "video/*";
+        else dom.fileInput.removeAttribute("accept");
+        dom.fileInput.multiple = true;
+        dom.fileInput.click();
+      });
+    });
+
+    dom.fileInput.addEventListener("change", async (e) => {
+      const files = e.target.files;
+      if (!files || files.length === 0) return;
+
+      for (const file of Array.from(files)) {
+        if (file.size > CONFIG.maxFileBytes) {
+          alert(`File "${file.name}" quá lớn (>${formatSize(CONFIG.maxFileBytes)}). Bỏ qua.`);
+          continue;
+        }
+        if (file.size > CONFIG.warnFileBytes) {
+          const ok = confirm(
+            `File "${file.name}" khá lớn (${formatSize(file.size)}). Có thể làm chậm trang. Tiếp tục?`
+          );
+          if (!ok) continue;
+        }
+        try {
+          const data = await readAsDataURL(file);
+          state.pendingAttachments.push({
+            type: fileType(file),
+            name: file.name,
+            size: file.size,
+            data
+          });
+        } catch {
+          alert("Không đọc được file: " + file.name);
+        }
+      }
+
+      renderPreview();
+      updatePostBtn();
+    });
+
+    dom.postBtn.addEventListener("click", async () => {
+      const text = dom.postText.value.trim();
+      const dt = dom.postDate.value || nowLocalISO();
+
+      if (!text && state.pendingAttachments.length === 0) return;
+
+      const year = dt.slice(0, 4);
+      const originalLabel = dom.postBtn.textContent;
+
+      dom.postBtn.disabled = true;
+      dom.postBtn.textContent = state.lang === "vi" ? "Đang lưu..." : "Saving...";
+
+      try {
+        await DB.add({
+          year,
+          datetime: dt,
+          text,
+          attachments: state.pendingAttachments.map((a) => ({
+            type: a.type,
+            name: a.name,
+            size: a.size,
+            data: a.data
+          }))
+        });
+
+        state.pendingAttachments = [];
+        dom.postText.value = "";
+        renderPreview();
+
+        state.year = year;
+        localStorage.setItem("hql_year", year);
+        await renderTabs();
+        await renderPosts();
+
+        document.getElementById("diary").scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (err) {
+        alert("Lỗi khi lưu bài: " + (err.message || err));
+      } finally {
+        dom.postBtn.textContent = originalLabel;
+        updatePostBtn();
+      }
+    });
+
+    dom.langToggle.addEventListener("click", () => {
+      applyLang(state.lang === "vi" ? "en" : "vi");
+    });
+
+    dom.menuToggle.addEventListener("click", () => {
+      const open = dom.navLinks.classList.toggle("open");
+      dom.menuToggle.setAttribute("aria-expanded", String(open));
+      dom.menuToggle.textContent = open ? "✕" : "☰";
+    });
+
+    dom.navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        dom.navLinks.classList.remove("open");
+        dom.menuToggle.setAttribute("aria-expanded", "false");
+        dom.menuToggle.textContent = "☰";
+      });
+    });
+
+    function setupZaloLinks() {
+      const phone = String(CONFIG.zaloPhone).replace(/\D/g, "");
+      const valid = /^\d{9,15}$/.test(phone);
+      if (!valid) return;
+      $$(".zalo-link").forEach((link) => {
+        link.href = "https://zalo.me/" + phone;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      });
+    }
+
+    function initParticles() {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) return;
+
+      const canvas = document.createElement("canvas");
+      canvas.id = "bgParticles";
+      document.body.insertBefore(canvas, document.body.firstChild);
+
+      const ctx = canvas.getContext("2d");
+      let w, h;
+      const particles = [];
+      const COUNT = 40;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      for (let i = 0; i < COUNT; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.4,
+          vy: Math.random() * 0.2 + 0.05,
+          vx: (Math.random() - 0.5) * 0.1,
+          alpha: Math.random() * 0.3 + 0.1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of particles) {
+          p.y -= p.vy;
+          p.x += p.vx;
+          if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+          if (p.x < -10) p.x = w + 10;
+          if (p.x > w + 10) p.x = -10;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(106,169,255,${p.alpha})`;
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    async function init() {
+      initParticles();
+      setupZaloLinks();
+      dom.yearLabel.textContent = new Date().getFullYear();
+
+      try {
+        await DB.open();
+      } catch {
+        const msg = state.lang === "vi"
+          ? "<p>Không thể khởi động nhật ký.</p><p>Trình duyệt không hỗ trợ IndexedDB.</p>"
+          : "<p>Cannot start diary.</p><p>This browser doesn't support IndexedDB.</p>";
+        dom.diaryList.innerHTML = `<div class="diary-empty">${msg}</div>`;
+        dom.postBtn.disabled = true;
+        dom.postText.disabled = true;
+        dom.postDate.disabled = true;
+        applyLang(state.lang);
+        return;
+      }
+
+      applyLang(state.lang);
+      await renderTabs();
+
+      if (!dom.postDate.value || !dom.postDate.value.startsWith(state.year + "-")) {
+        dom.postDate.value = defaultDateForYear(state.year);
+      }
+
+      await renderPosts();
+      updatePostBtn();
+    }
+
+    init();
+  </script>
+</body>
+</html>

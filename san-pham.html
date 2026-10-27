@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0e14">
+  <meta name="description" content="Danh mục sản phẩm của HQL Web Studio - mẫu website, template, dịch vụ thiết kế.">
+  <title>Sản phẩm — HQL Web Studio</title>
+
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --bg-soft: #121722;
+      --card: #151b27;
+      --text: #e6ecf5;
+      --muted: #8a97ab;
+      --accent: #6aa9ff;
+      --line: #1f2734;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    button:focus-visible, a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    #bgParticles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    main, .footer { position: relative; z-index: 1; }
+
+    .container { width: min(1120px, 92%); margin: 0 auto; }
+    .section { padding: 70px 0; }
+
+    .label {
+      display: inline-block;
+      padding: 5px 12px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+
+    h1, h2, h3 { line-height: 1.25; letter-spacing: -.3px; font-weight: 700; }
+    h2 { margin-top: 14px; font-size: clamp(24px, 3.8vw, 34px); }
+    .accent { color: var(--accent); }
+
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11,14,20,.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    
+    .logo span { white-space: nowrap; }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #0b0e14;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: #c3ccdb;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(0,0,0,.25);
+      transition: transform .22s, border-color .22s, background .22s, color .22s, box-shadow .22s;
+    }
+
+    .nav-links a:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--card);
+      box-shadow: 0 8px 20px rgba(106,169,255,.22);
+    }
+
+    .nav-links a.back-link {
+      border-color: rgba(106,169,255,.4);
+      color: var(--accent);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 40px; height: 40px;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .hero { padding: 60px 0 30px; text-align: center; }
+
+    .hero h1 {
+      margin: 16px auto 14px;
+      font-size: clamp(28px, 4.5vw, 44px);
+      max-width: 720px;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 34px 0 30px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all .2s;
+    }
+
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0b0e14;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .22s, border-color .22s, box-shadow .22s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(106,169,255,.45);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+
+    .product-thumb {
+      aspect-ratio: 16 / 10;
+      display: grid;
+      place-items: center;
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-thumb::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(106,169,255,.15), transparent 45%),
+        radial-gradient(circle at 70% 70%, rgba(167,139,250,.12), transparent 45%);
+    }
+
+    .product-thumb span {
+      position: relative;
+      font-size: 40px;
+      opacity: 0.7;
+    }
+
+    .product-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-cat {
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+
+    .product-name {
+      margin-top: 6px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .product-desc {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .product-price {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .product-price strong { font-size: 16px; color: var(--accent); }
+    .product-price small { color: var(--muted); font-size: 12px; }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 50px 20px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      transition: opacity .25s;
+    }
+
+    .modal-overlay.open { display: flex; }
+    .modal-overlay.show { opacity: 1; }
+
+    .modal {
+      width: min(620px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+      transform: translateY(20px) scale(.97);
+      transition: transform .3s;
+    }
+
+    .modal-overlay.show .modal { transform: translateY(0) scale(1); }
+
+    .modal-head {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .modal-head .product-cat { display: block; margin-bottom: 6px; }
+    .modal-head h3 { font-size: 22px; }
+
+    .modal-close {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      color: var(--muted);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover { color: var(--accent); border-color: var(--accent); }
+
+    .modal-body { padding: 22px 24px; }
+
+    .modal-body p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .modal-body ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .modal-body li {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg-soft);
+      font-size: 13px;
+      color: #c8d1df;
+    }
+
+    .modal-body li::before {
+      content: "·";
+      margin-right: 8px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .modal-foot {
+      padding: 18px 24px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+    }
+
+    .modal-price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .modal-price small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .15s, border-color .15s;
+    }
+
+    .btn-primary { background: var(--accent); color: #0b0e14; }
+    .btn-primary:hover { background: #8bbcff; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .info-card h3 { font-size: 18px; margin-bottom: 12px; }
+    .info-card p { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+
+    .info-card ul { list-style: none; display: grid; gap: 10px; }
+
+    .info-card li {
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: #c8d1df;
+    }
+
+    .info-card li:first-child { border-top: none; padding-top: 0; }
+
+    .info-card li strong {
+      color: var(--accent);
+      display: block;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .cta-box {
+      padding: 44px 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      text-align: center;
+    }
+
+    .cta-box h2 { max-width: 620px; margin: 12px auto; }
+
+    .cta-box p {
+      max-width: 540px;
+      margin: 0 auto 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer p { color: var(--muted); font-size: 12px; }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+
+    @media (max-width: 1024px) {
+      .menu-toggle { display: grid; place-items: center; }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 0; right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 14px 4% 18px;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links a { text-align: center; font-size: 14px; }
+    }
+
+    @media (max-width: 900px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .section { padding: 50px 0; }
+      .navbar { min-height: 62px; }
+
+      .product-grid { grid-template-columns: 1fr; }
+      .modal-foot { flex-direction: column; align-items: stretch; }
+      .modal-foot .btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">HQL</span>
+        <span>HQL Web Studio</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button"
+        aria-label="Mở menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="#products">Sản phẩm</a>
+        <a href="#info">Thông tin</a>
+        <a href="about.html">Giới thiệu</a>
+        <a href="#contact">Liên hệ</a>
+        <a href="index.html" class="back-link">← Về web chính</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <span class="label">Sản phẩm & dịch vụ</span>
+        <h1>Sản phẩm mình đang cung cấp</h1>
+        <p>
+          Một số mẫu website, template và dịch vụ thiết kế mình đang làm.
+          Bấm vào từng sản phẩm để xem chi tiết và giá.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="filter-bar" id="filterBar" role="tablist" aria-label="Lọc sản phẩm"></div>
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="info">
+      <div class="container">
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>Mình làm gì</h3>
+            <p>
+              HQL Web Studio chuyên làm website tĩnh — phù hợp cho cá nhân,
+              cửa hàng nhỏ, hoặc dự án cần trang giới thiệu nhanh và gọn.
+            </p>
+            <ul>
+              <li>
+                <strong>Web cá nhân / portfolio</strong>
+                Trang giới thiệu bản thân, kỹ năng, dự án đã làm.
+              </li>
+              <li>
+                <strong>Landing page bán hàng</strong>
+                Trang tập trung giới thiệu một sản phẩm hoặc dịch vụ.
+              </li>
+              <li>
+                <strong>Sửa giao diện có sẵn</strong>
+                Nhận chỉnh sửa, redesign template có sẵn theo yêu cầu.
+              </li>
+            </ul>
+          </article>
+
+          <article class="info-card">
+            <h3>Thông tin đặt hàng</h3>
+            <p>
+              Mọi đơn hàng đều làm qua trao đổi trước. Bạn mô tả yêu cầu,
+              mình báo giá và thời gian cụ thể, chốt xong mới bắt đầu.
+            </p>
+            <ul>
+              <li>
+                <strong>Thời gian làm</strong>
+                Gói cơ bản: 2–4 ngày. Gói phức tạp: 5–10 ngày.
+              </li>
+              <li>
+                <strong>Thanh toán</strong>
+                Cọc 50% khi bắt đầu, 50% còn lại khi bàn giao.
+              </li>
+              <li>
+                <strong>Sửa đổi</strong>
+                Miễn phí 2 lần chỉnh sửa nhỏ sau khi bàn giao.
+              </li>
+              <li>
+                <strong>Bàn giao</strong>
+                Gửi file HTML/CSS/JS qua Zalo hoặc Google Drive.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="cta-box">
+          <span class="label">Liên hệ</span>
+          <h2>Ưng sản phẩm nào? <span class="accent">Nhắn mình.</span></h2>
+          <p>
+            Gửi tên sản phẩm bạn muốn, kèm mô tả ngắn về nhu cầu.
+            Mình sẽ phản hồi và xác nhận lại trước khi bắt đầu.
+          </p>
+
+          <div class="cta-actions">
+            <a class="btn btn-primary zalo-link" href="#contact" target="_blank" rel="noopener">
+              Nhắn Zalo
+            </a>
+            <a class="btn" style="border:1px solid var(--line);background:var(--bg-soft);color:var(--text);" href="index.html">
+              Xem web chính
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a href="index.html" class="logo">
+          <span class="logo-mark">HQL</span>
+          <span>HQL Web Studio</span>
+        </a>
+        <p style="margin-top: 10px;">Nhận làm website theo yêu cầu.</p>
+        <p style="margin-top: 4px;">© <span id="year"></span> HQL Web Studio.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">Trang chủ</a>
+        <a href="#products">Sản phẩm</a>
+        <a href="#info">Thông tin</a>
+        <a href="about.html">Giới thiệu</a>
+        <a href="#contact">Liên hệ</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Chi tiết sản phẩm">
+    <div class="modal" id="modalBody"></div>
+  </div>
+
+  <script>
+    const PRODUCTS = [
+      {
+        id: 1,
+        name: "Landing Page Cơ Bản",
+        category: "Landing Page",
+        price: "150.000đ",
+        emoji: "🎯",
+        short: "1 trang giới thiệu sản phẩm, có nút liên hệ rõ ràng.",
+        desc: "Mẫu landing page 1 trang gọn gàng, phù hợp cho việc giới thiệu một sản phẩm, dịch vụ hoặc sự kiện. Có sẵn các khu vực chính: hero, tính năng, CTA và footer.",
+        features: [
+          "1 trang HTML/CSS",
+          "Responsive điện thoại + máy tính",
+          "Nút CTA liên kết Zalo / Facebook",
+          "Chỉnh sửa nội dung dễ dàng",
+          "Bàn giao file zip"
+        ]
+      },
+      {
+        id: 2,
+        name: "Portfolio Cá Nhân",
+        category: "Portfolio",
+        price: "250.000đ",
+        emoji: "👤",
+        short: "Trang giới thiệu bản thân, kỹ năng và dự án đã làm.",
+        desc: "Trang portfolio cá nhân theo phong cách tối giản. Có phần giới thiệu, kỹ năng, dự án, và form liên hệ. Phù hợp cho freelancer, designer, developer mới bắt đầu.",
+        features: [
+          "Trang chủ + phần giới thiệu",
+          "Danh sách dự án có hover effect",
+          "Liên kết mạng xã hội",
+          "Form liên hệ cơ bản",
+          "Responsive hoàn chỉnh"
+        ]
+      },
+      {
+        id: 3,
+        name: "Website Doanh Nghiệp Nhỏ",
+        category: "Website",
+        price: "400.000đ",
+        emoji: "🏢",
+        short: "Trang giới thiệu công ty, dịch vụ và liên hệ.",
+        desc: "Website đa phần cho cửa hàng nhỏ hoặc công ty mới thành lập. Bao gồm trang chủ, giới thiệu, dịch vụ, và liên hệ. Phù hợp để giới thiệu thương hiệu online.",
+        features: [
+          "3–4 trang nội dung",
+          "Menu điều hướng cố định",
+          "Trang dịch vụ dạng danh sách",
+          "Bản đồ và form liên hệ",
+          "Tối ưu SEO cơ bản"
+        ]
+      },
+      {
+        id: 4,
+        name: "Blog Cá Nhân",
+        category: "Website",
+        price: "350.000đ",
+        emoji: "📝",
+        short: "Trang blog viết bài, có danh mục và tìm kiếm.",
+        desc: "Giao diện blog cá nhân để đăng bài viết, chia sẻ kiến thức. Có phân loại theo chủ đề, xem chi tiết bài, và giao diện đọc dễ chịu.",
+        features: [
+          "Trang danh sách bài viết",
+          "Trang chi tiết bài viết",
+          "Phân loại theo chủ đề",
+          "Responsive mobile",
+          "Hỗ trợ thêm bài mới dễ dàng"
+        ]
+      },
+      {
+        id: 5,
+        name: "Menu Quán Ăn / Cafe",
+        category: "Landing Page",
+        price: "200.000đ",
+        emoji: "☕",
+        short: "Trang menu online có ảnh món, giá và địa chỉ.",
+        desc: "Trang menu online cho quán ăn, cafe, hoặc tiệm bánh. Hiển thị món theo danh mục, có ảnh món, giá, và thông tin liên hệ / địa chỉ quán.",
+        features: [
+          "Menu phân theo danh mục",
+          "Hiển thị ảnh món + giá",
+          "Thông tin địa chỉ, giờ mở cửa",
+          "Nút gọi điện / chỉ đường",
+          "Tối ưu hiển thị điện thoại"
+        ]
+      },
+      {
+        id: 6,
+        name: "Sửa Giao Diện Có Sẵn",
+        category: "Dịch vụ",
+        price: "Từ 100.000đ",
+        emoji: "🔧",
+        short: "Chỉnh sửa, redesign template có sẵn theo yêu cầu.",
+        desc: "Bạn có sẵn template hoặc website nhưng muốn chỉnh sửa lại cho phù hợp? Mình nhận sửa màu sắc, bố cục, thêm/bớt phần, hoặc đổi toàn bộ phong cách.",
+        features: [
+          "Đổi màu, font, khoảng cách",
+          "Thêm hoặc bớt section",
+          "Sửa responsive mobile",
+          "Tối ưu tốc độ tải trang",
+          "Báo giá sau khi xem yêu cầu"
+        ]
+      }
+    ];
+
+    const CONFIG = { zaloPhone: "0325687418" };
+
+    const filterBar = document.getElementById("filterBar");
+    const productGrid = document.getElementById("productGrid");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalBody = document.getElementById("modalBody");
+
+    const categories = ["Tất cả", ...new Set(PRODUCTS.map(p => p.category))];
+    let activeCategory = "Tất cả";
+
+    function renderFilters() {
+      filterBar.innerHTML = "";
+      categories.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.className = "filter-btn" + (cat === activeCategory ? " active" : "");
+        btn.textContent = cat;
+        btn.type = "button";
+        btn.addEventListener("click", () => {
+          activeCategory = cat;
+          renderFilters();
+          renderProducts();
+        });
+        filterBar.appendChild(btn);
+      });
+    }
+
+    function renderProducts() {
+      const filtered = activeCategory === "Tất cả"
+        ? PRODUCTS
+        : PRODUCTS.filter(p => p.category === activeCategory);
+
+      productGrid.innerHTML = "";
+
+      if (filtered.length === 0) {
+        productGrid.innerHTML = '<div class="empty-state">Chưa có sản phẩm trong danh mục này.</div>';
+        return;
+      }
+
+      filtered.forEach(p => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", "Xem chi tiết: " + p.name);
+
+        card.innerHTML = `
+          <div class="product-thumb"><span>${p.emoji}</span></div>
+          <div class="product-info">
+            <span class="product-cat">${p.category}</span>
+            <h3 class="product-name">${p.name}</h3>
+            <p class="product-desc">${p.short}</p>
+            <div class="product-price">
+              <strong>${p.price}</strong>
+              <small>Xem chi tiết →</small>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => openModal(p));
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openModal(p);
+          }
+        });
+
+        productGrid.appendChild(card);
+      });
+    }
+
+    function openModal(p) {
+      modalBody.innerHTML = `
+        <div class="modal-head">
+          <div>
+            <span class="product-cat">${p.category}</span>
+            <h3>${p.name}</h3>
+          </div>
+          <button class="modal-close" type="button" aria-label="Đóng">✕</button>
+        </div>
+        <div class="modal-body">
+          <p>${p.desc}</p>
+          <ul>${p.features.map(f => `<li>${f}</li>`).join("")}</ul>
+        </div>
+        <div class="modal-foot">
+          <div class="modal-price">
+            ${p.price}
+            <small>Giá tham khảo, có thể thay đổi theo yêu cầu</small>
+          </div>
+          <a class="btn btn-primary zalo-link"
+             href="#contact"
+             target="_blank"
+             rel="noopener"
+             data-product="${p.name}">
+            Đặt mua sản phẩm này
+          </a>
+        </div>
+      `;
+
+      modalOverlay.classList.add("open");
+      requestAnimationFrame(() => modalOverlay.classList.add("show"));
+      document.body.style.overflow = "hidden";
+
+      modalBody.querySelector(".modal-close").addEventListener("click", closeModal);
+      setupZaloLinks();
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove("show");
+      setTimeout(() => {
+        modalOverlay.classList.remove("open");
+        modalBody.innerHTML = "";
+        document.body.style.overflow = "";
+      }, 250);
+    }
+
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modalOverlay.classList.contains("open")) closeModal();
+    });
+
+    function setupZaloLinks() {
+      const phone = String(CONFIG.zaloPhone).replace(/\D/g, "");
+      const valid = /^\d{9,15}$/.test(phone);
+      document.querySelectorAll(".zalo-link").forEach((link) => {
+        if (valid) {
+          link.href = "https://zalo.me/" + phone;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+      });
+    }
+
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.textContent = open ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function initParticles() {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) return;
+
+      const canvas = document.createElement("canvas");
+      canvas.id = "bgParticles";
+      document.body.insertBefore(canvas, document.body.firstChild);
+
+      const ctx = canvas.getContext("2d");
+      let w, h;
+      const particles = [];
+      const COUNT = 40;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      for (let i = 0; i < COUNT; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.4,
+          vy: Math.random() * 0.2 + 0.05,
+          vx: (Math.random() - 0.5) * 0.1,
+          alpha: Math.random() * 0.3 + 0.1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of particles) {
+          p.y -= p.vy;
+          p.x += p.vx;
+          if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+          if (p.x < -10) p.x = w + 10;
+          if (p.x > w + 10) p.x = -10;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(106,169,255," + p.alpha + ")";
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    initParticles();
+    renderFilters();
+    renderProducts();
+    setupZaloLinks();
+  </script>
+</body>
+</html>
